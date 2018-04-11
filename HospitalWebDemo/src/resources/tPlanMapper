@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.tPlanMapper">
+    <resultMap id="tPlanMap" type="bean.tPlan">
+        <id property="p_id" column="p_id" javaType="int"/>
+        <result property="bingshi" column="bingshi" javaType="string"/>
+        <result property="jiancha" column="jiancha" javaType="string"/>
+        <result property="zhenduan" column="zhenduan"  javaType="string" />
+        <result property="zhiliao" column="zhiliao"  javaType="string" />
+        <result property="chuyuan" column="chuyuan"  javaType="string" />
+
+
+
+
+    </resultMap>
+
+
+
+
+
+
+
+    <update id="updataPlan" parameterType="bean.tPlan" >
+
+        UPDATE t_plan
+SET bingshi = #{bingshi},
+ jiancha = #{jiancha},
+ zhenduan = #{zhenduan},
+ zhiliao = #{zhiliao},
+ chuyuan = #{chuyuan}
+WHERE
+	p_id = #{p_id}
+    </update>
+
+    <select id="get" parameterType="int" resultType="bean.tPlan">
+
+        SELECT * FROM t_plan WHERE p_id = #{p_id}
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.doctorMapper">
+    <resultMap id="doctorMap" type="bean.doctor">
+        <id property="doc_id" column="doc_id" javaType="int"/>
+        <result property="doc_name" column="doc_name"  javaType="string" />
+        <result property="doc_age" column="doc_age"  javaType="int" />
+        <result property="department" column="department"  javaType="string" />
+        <result property="hospital" column="hospital"  javaType="string" />
+        <result property="levels" column="levels"  javaType="string" />
+        <result property="d_level" column="d_level"  javaType="int" />
+
+       </resultMap>
+
+
+
+
+    <select id="findDoctor" parameterType="int"  resultMap="doctorMap" >
+        SELECT * FROM t_doc_info  WHERE  doc_id = #{doc_id}
+    </select>
+</mapper>

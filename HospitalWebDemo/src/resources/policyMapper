@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.policyMapper">
+    <resultMap id="policyMap" type="bean.policy">
+        <result property="districtID" column="district_id" javaType="int"/>
+        <result property="district" column="district"  javaType="string" />
+        <result property="polName" column="pol_name"  javaType="string" />
+        <result property="polContent" column="pol_content"  javaType="string" />
+        <result property="polPic" column="pol_pic"  javaType="string" />
+        <result property="polData" column="pol_data"  javaType="string" />
+
+    </resultMap>
+
+
+
+    <select id="selectpolicy"  resultType="bean.policy" >
+       SELECT
+	district district,
+	pol_name polName,
+	pol_content polContent,
+	pol_data polData,
+	pol_pic polPic
+FROM
+	med_pol m
+LEFT JOIN rc_district r ON m.district_id=r.district_id WHERE m.district_id = #{districtID}
+
+    </select>
+</mapper>

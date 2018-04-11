@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.drugMapper">
+    <resultMap id="drugMap" type="bean.drug">
+        <result property="drID" column="dr_id" javaType="int"/>
+        <result property="typeID" column="type_id" javaType="int"/>
+        <result property="type" column="d_type"  javaType="string" />
+        <result property="drName" column="dr_name"  javaType="string" />
+        <result property="drMaterial" column="dr_material"  javaType="string" />
+        <result property="drEffCon" column="dr_eff_con"  javaType="string" />
+        <result property="inappro" column="inappro"  javaType="string" />
+        <result property="eatDos" column="eat_dos"  javaType="string" />
+        <result property="specifi" column="specifi"  javaType="string" />
+        <result property="drPic" column="dr_pic"  javaType="string" />
+        <result property="others" column="others"  javaType="string" />
+
+
+
+    </resultMap>
+
+
+
+
+    <select id="findDrugBytype" parameterType="int"  resultMap="drugMap" >
+        SELECT * FROM t_drug  WHERE  type_id = #{typeID}
+    </select>
+</mapper>

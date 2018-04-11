@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.blogMapper">
+    <resultMap id="blogMap" type="bean.blog">
+        <id property="sendID" column="send_id" javaType="int"/>
+        <result property="loginName" column="login_name" javaType="string"/>
+        <result property="role" column="role" javaType="int"/>
+        <result property="department" column="department" javaType="string"/>
+        <result property="title" column="title" javaType="string"/>
+        <result property="content" column="content" javaType="string"/>
+        <result property="sPic" column="s_pic" javaType="string"/>
+        <result property="sPic1" column="s_pic1" javaType="string"/>
+        <result property="readCount" column="read_count" javaType="string"/>
+        <result property="sData" column="s_data" javaType="string"/>
+    </resultMap>
+
+
+    <insert id="insertBlog" parameterType="bean.blog" useGeneratedKeys="true" keyProperty="sendID">
+
+        INSERT INTO t_blog (login_name ,
+        role ,
+        department ,
+        title ,
+        content ,
+        s_pic ,
+        s_pic1 ,
+
+        s_data
+        )
+        VALUES
+        (
+        #{loginName},#{role},#{role},#{title},#{content},#{sPic},#{sPic1}, #{sData}
+        )
+    </insert>
+
+    <select id="getBlogs" resultType="bean.blog">
+
+      SELECT
+	t.send_id sendID,
+	t.login_name loginName,
+	t.role role,
+	d.department department,
+	t.title title,
+	t.content content,
+	t.s_pic sPic,
+	t.s_pic1 sPic1,
+	t.read_count readCount,
+	t.s_data sData
+FROM
+	t_blog t LEFT JOIN t_depart d
+ON t.department = d.d_id
+ORDER BY
+	s_data DESC
+    </select>
+
+    <select id="getBlog" parameterType="int" resultType="bean.blog">
+
+        SELECT
+        t.send_id sendID,
+        t.login_name loginName,
+        t.role role,
+        d.department department,
+        t.title title,
+        t.content content,
+        t.s_pic sPic,
+        t.s_pic1 sPic1,
+        t.read_count readCount,
+        t.s_data sData
+        FROM
+        t_blog t LEFT JOIN t_depart d
+        ON t.department = d.d_id
+       WHERE send_id = #{sendID}
+    </select>
+
+    <select id="Blogfilter"  resultType="bean.blog">
+    SELECT
+        t.send_id sendID,
+        t.login_name loginName,
+        t.role role,
+        d.department department,
+        t.title title,
+        t.content content,
+        t.s_pic sPic,
+        t.s_pic1 sPic1,
+        t.read_count readCount,
+        t.s_data sData
+        FROM
+        t_blog t LEFT JOIN t_depart d
+        ON t.department = d.d_id
+        WHERE
+         <if test="department != 0" >
+           d_id = #{department} AND
+         </if>
+        <if test="question != '' || question != null" >
+            title LIKE  concat('%',#{question},'%')
+        </if>
+        ORDER BY
+        s_data DESC
+
+    </select>
+    <update id="updataReadCount" parameterType="int" >
+        update t_blog set read_count=read_count+'1' where send_id=#{sendID}
+    </update>
+</mapper>

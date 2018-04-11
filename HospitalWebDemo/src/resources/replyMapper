@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.replyMapper">
+    <resultMap id="replyMap" type="bean.reply">
+        <id property="replyID" column="reply_id" javaType="int"/>
+        <result property="sendID" column="send_id" javaType="int"/>
+        <result property="loginName" column="login_name" javaType="string"/>
+        <result property="role" column="role" javaType="int"/>
+         <result property="replyCont" column="reply_cont" javaType="string"/>
+        <result property="rPic" column="r_pic" javaType="string"/>
+        <result property="rPic1" column="r_pic1" javaType="string"/>
+        <result property="rData" column="r_data" javaType="string"/>
+
+    </resultMap>
+
+
+    <insert id="insertReply" parameterType="bean.reply" useGeneratedKeys="true" keyProperty="replyID">
+
+        INSERT INTO t_reply (send_id,login_name,role,reply_cont,r_pic,r_pic1,r_data)
+        VALUES
+        (#{sendID},#{loginName},#{role},#{replyCont}, #{rPic},#{rPic1},#{rData}
+
+
+        )
+    </insert>
+
+    <select id="getRelpy"  resultType="bean.reply">
+      SELECT
+	reply_id replyID,
+	send_id sendID,
+	login_name loginName,
+	role role,
+	reply_cont replyCont,
+	r_data rData,
+	r_pic rPic,
+	r_pic1 rPic1
+FROM
+	t_reply
+WHERE
+	send_id = #{sendID}
+ORDER BY
+	r_data
+    </select>
+</mapper>

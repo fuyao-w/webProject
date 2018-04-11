@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.visitMapper">
+    <resultMap id="visitMap" type="bean.visit">
+
+        <result property="doc_id" column="doc_id"  javaType="String" />
+        <result property="t_visit" column="t_visit"  javaType="String" />
+        <result property="deparCount" column="deparCount"  javaType="String" />
+        <association property="doctor"  javaType="bean.doctor">
+            <result property="doc_name" column="doc_name"  javaType="string" />
+            <result property="department" column="department"  javaType="string" />
+            <result property="levels" column="levels"  javaType="string" />
+        </association>
+
+    </resultMap>
+
+    <resultMap id="visitCountMap" type="bean.visit">
+
+
+
+        <result property="deparCount" column="deparCount"  javaType="String" />
+        <association property="doctor"  javaType="bean.doctor">
+
+            <result property="department" column="department"  javaType="string" />
+
+        </association>
+
+    </resultMap>
+    <select id="selectDocVisit"   resultMap="visitMap">
+        SELECT doc_name,levels,department,t_visit FROM t_doc_info a LEFT JOIN t_doc_visit b ON a.doc_id = b.doc_id order by department
+    </select>
+
+    <select id="selectDeCount"   resultType="bean.visit">
+       SELECT
+COUNT(d.doc_name) deparCount,
+ d.department
+FROM
+	t_doc_visit v
+RIGHT JOIN t_doc_info d ON d.doc_id = v.doc_id  GROUP BY d.department
+    </select>
+</mapper>

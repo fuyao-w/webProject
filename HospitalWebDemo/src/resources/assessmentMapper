@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.assessmentMapper">
+    <resultMap id="assessmentMap" type="bean.assessment">
+        <result property="pID" column="p_id" javaType="int"/>
+        <result property="pScore" column="p_score"  javaType="float" />
+        <result property="eTime" column="e_time"  javaType="string" />
+        <result property="pName" column="p_name"  javaType="string" />
+
+
+    </resultMap>
+
+
+
+<insert id="insertAss" parameterType="bean.assessment" useGeneratedKeys="true" >
+    INSERT INTO t_ass (p_id,p_score,e_time) VALUES (#{pID}, #{pScore}, #{eTime})
+</insert>
+    <select id="getAsscount"   resultType="int" >
+      SELECT COUNT(e_time) FROM t_ass WHERE p_id = #{pID} AND e_time = #{eTime}
+    </select>
+    <select id="getPatientass" parameterType="int"  resultType="bean.assessment" >
+  SELECT
+	t.p_id pID,
+	p.p_name pName,
+	CONVERT(AVG(t.p_score),decimal(10,2))  pScore,
+	t.e_time eTime
+FROM
+	t_ass t
+RIGHT JOIN p_info p
+ON
+	t.p_id = p.p_id
+WHERE t.p_id = #{pID}
+GROUP BY t.e_time
+    </select>
+</mapper>

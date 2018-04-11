@@ -1,0 +1,4 @@
+2018-03-10 02:21:31  [ main:0 ] - [ INFO ]  Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@504bae78: startup date [Sat Mar 10 02:21:31 CST 2018]; root of context hierarchy
+    2018-03-10 02:21:31  [ main:59 ] - [ INFO ]  Loading XML bean definitions from class path resource [resources/applicationContext.xml]
+    2018-03-10 02:21:32  [ main:335 ] - [ WARN ]  No MyBatis mapper was found in '[resources]' package. Please check your configuration.
+    

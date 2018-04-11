@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.patientMapper">
+    <resultMap id="patientMap" type="bean.patient">
+        <id property="p_id" column="p_id" javaType="int"/>
+        <result property="doc_id" column="doc_id"  javaType="int" />
+        <result property="p_name" column="p_name"  javaType="string" />
+        <result property="sex" column="sex"  javaType="int" />
+        <result property="age" column="age"  javaType="int" />
+        <result property="id_card" column="id_card"  javaType="string" />
+        <result property="districtID" column="district_id"  javaType="int" />
+        <result property="call_num" column="call_num"  javaType="string" />
+        <result property="t_project" column="t_project"  javaType="string" />
+        <result property="be_hos_date" column="be_hos_date"  javaType="string" />
+        <result property="remarks" column="remarks"  javaType="string" />
+
+
+    </resultMap>
+
+
+
+
+    <select id="findPatient" parameterType="int"  resultMap="patientMap" >
+       SELECT * FROM p_info  WHERE  p_id = #{p_id}
+    </select>
+
+    <select id="findPatients"  resultMap="patientMap" >
+        SELECT * FROM p_info  WHERE  doc_id = #{doc_id} LIMIT #{page},#{rows}
+    </select>
+    <select id="findAllPatientsCount"  resultType="int" >
+        SELECT  COUNT(0) FROM p_info
+    </select>
+</mapper>

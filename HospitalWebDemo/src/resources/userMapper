@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.userMapper">
+    <resultMap id="userMap" type="bean.user">
+        <id property="tu_id" column="tu_id" javaType="int"/>
+        <result property="login_name" column="login_name" javaType="string"/>
+        <result property="pword" column="pword" javaType="string"/>
+        <result property="id_num" column="id_num" javaType="string"/>
+        <result property="role" column="role" javaType="int"/>
+
+    </resultMap>
+    <resultMap id="userPatientInfoMap" extends="userMap" type="bean.user" >
+
+        <association property="patient" resultMap="mapper.patientMapper.patientMap" />
+
+    </resultMap>
+    <resultMap id="userDoctorInfoMap" extends="userMap" type="bean.user" >
+
+        <association property="doctor" resultMap="mapper.doctorMapper.doctorMap" />
+
+    </resultMap>
+    <insert id="insertUser" parameterType="bean.user"  useGeneratedKeys="true" keyProperty="tu_id">
+      INSERT INTO t_user (login_name,pword,id_num,role ) VALUES (#{login_name},#{pword},#{id_num},#{role})
+
+    </insert>
+    <select id="rechecking" parameterType="string" resultType="int">
+        SELECT COUNT(login_name) FROM t_user WHERE login_name=#{login_name}
+    </select>
+    <select id="findUser" parameterType="bean.user" resultMap="userMap">
+        SELECT * FROM t_user WHERE login_name=#{login_name} AND pword =#{pword}
+    </select>
+
+    <select id="findUserInfoByPatient" parameterType="bean.user"   resultMap="userPatientInfoMap">
+    SELECT
+        t.login_name ,
+        t.pword ,
+        t.role ,
+        t.id_num ,
+        u.p_id ,
+        u.p_name ,
+        u.id_card  ,
+        u.district_id,
+        u.sex ,
+        u.age  ,
+        u.t_project  ,
+        u.be_hos_date  ,
+        u.call_num  ,
+        u.doc_id  ,
+        u.remarks
+        FROM
+        t_user t
+        LEFT JOIN p_info u ON t.id_num = u.p_id WHERE login_name=#{login_name} AND pword =#{pword}
+
+    </select>
+    <select id="findUserInfoByDoctor" parameterType="bean.user"   resultMap="userDoctorInfoMap">
+        SELECT
+        t.login_name ,
+        t.pword ,
+        t.role ,
+        t.id_num ,
+        u.doc_id ,
+        u.doc_name ,
+        u.doc_age  ,
+        u.department  ,
+        u.hospital ,
+        u.levels  ,
+        u.d_level
+        FROM
+        t_user t
+        LEFT JOIN t_doc_info u ON t.id_num = u.doc_id WHERE login_name= #{login_name} AND pword =#{pword}
+
+    </select>
+
+</mapper>
+
